@@ -1,5 +1,6 @@
 #include <iostream>
 #include <limits>
+#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -41,7 +42,11 @@ void DL(Node **head, int *jumlahRoster);
 void DP(Node **head, int *jumlahRoster);
 void quickSort(struct Node **headRef, int kategori = 11);
 void Sort(Node **head, string menu);
+void Search(Node **head, int *jumlahRoster, string menu);
 void errorInput(int &input);
+int min(int x, int y);
+int fibonacciSearch(struct Node *node, int x, int n);
+int jumpSearch(struct Node *node, int x, int n);
 Node *getTail(struct Node *cur);
 Node *partition(Node *head, Node *end, Node **newHead, Node **newEnd, int kategori);
 Node *quickSortRecur(struct Node *head, struct Node *end, int kategori);
@@ -53,10 +58,11 @@ int main()
     bool loop = true;
     Node *head = NULL;
 
-    string menuUtama = "\n == Data Roster Karakter ==\n 1. Tambah Data\n 2. Lihat Data\n 3. Ubah Data\n 4. Hapus data\n 5. Keluar\n Masukan pilihan : ";
+    string menuUtama = "\n == Data Roster Karakter ==\n 1. Tambah Data\n 2. Lihat Data\n 3. Ubah Data\n 4. Hapus data\n 5. Cari Data\n 6. Keluar\n Masukan pilihan : ";
     string menuTambah = "\n == Tambah Data Roster Karakter ==\n 1. Tambah di awal\n 2. Tambah di akhir\n 3. Tambah urutan tertentu\n Masukan pilihan : ";
     string menuHapus = "\n == Hapus Data Roster Karakter ==\n 1. Hapus urutan pertama\n 2. Hapus urutan akhir\n 3. Hapus urutan tertentu\n Masukan pilihan : ";
     string menuSort = "\n == Tampilkan Data Roster Karakter ==\n 1. Tampilkan tanpa sort\n 2. Sorting Berdasarkan SID (Ascending)\n 3. Sorting Berdasarkan SID (Descending)\n 4. Sorting Berdasarkan Umur (Ascending)\n 5. Sorting Berdasarkan Umur (Descending)\n Masukan pilihan : ";
+    string menuSearch = "\n == Cari Data Roster Karakter ==\n 1. Cari Umur\n 2. Cari SID\n Masukan pilihan : ";
     while (loop == true)
     {
         cout << menuUtama;
@@ -80,6 +86,10 @@ int main()
             break;
 
         case 5:
+            Search(&head, &jumlahRoster, menuSearch);
+            break;
+
+        case 6:
             loop = false;
             break;
 
@@ -98,6 +108,7 @@ void Create(Node **head, int *jumlahRoster, string menu)
     {
         cout << menu;
         cin >> input;
+        errorInput(input);
         switch (input)
         {
         case 1:
@@ -114,8 +125,11 @@ void Create(Node **head, int *jumlahRoster, string menu)
             CP(head, jumlahRoster);
             loop = false;
             break;
+
         case 0:
             loop = false;
+            break;
+
         default:
             cout << "Masukan antara 1-3 (0 untuk kembali)!";
             break;
@@ -198,8 +212,30 @@ void CP(Node **head, int *jumlahRoster)
     }
 }
 
-void Read(Node *head)
+void Read(Node *head, int index)
 {
+    if (index != -2 and index != -1)
+    {
+        for (int i = 0; i < index; i++)
+        {
+            head = head->next;
+        }
+        cout << "\n Di temukan di index : " << index << endl
+             << "   SID       : " << head->data.sid << endl
+             << "   Nama      : " << head->data.bio.nama << endl
+             << "   Gender    : " << head->data.bio.gender << endl
+             << "   Umur      : " << head->data.bio.umur << endl
+             << "   Lahir     : " << head->data.lahir.hari << "-" << head->data.lahir.bulan << "-" << head->data.lahir.tahun << endl
+             << "   Class     : " << head->data.clas << endl
+             << "   Posisi    : " << head->data.position << endl;
+        return;
+    }
+    if (index == -1)
+    {
+        cout << "\n Data tidak ditemukan! \n";
+        return;
+    }
+
     if (head == NULL)
     {
         cout << ">> LinkedList masih kosong <<" << endl;
@@ -232,36 +268,39 @@ void Sort(Node **head, string menu)
     {
         cout << menu;
         cin >> input;
+        errorInput(input);
         switch (input)
         {
         case 1:
-            Read(*head);
+            Read(*head, -2);
             loop = false;
             break;
 
         case 2:
             quickSort(head, 11);
-            Read(*head);
+            Read(*head, -2);
             loop = false;
             break;
 
         case 3:
             quickSort(head, 12);
-            Read(*head);
+            Read(*head, -2);
             loop = false;
             break;
         case 4:
             quickSort(head, 21);
-            Read(*head);
+            Read(*head, -2);
             loop = false;
             break;
         case 5:
             quickSort(head, 22);
-            Read(*head);
+            Read(*head, -2);
             loop = false;
             break;
         case 0:
             loop = false;
+            break;
+
         default:
             cout << "Masukan antara 1-5 (0 untuk kembali)!";
             break;
@@ -310,6 +349,7 @@ void Delete(Node **head, int *jumlahRoster, string menu)
     {
         cout << menu;
         cin >> input;
+        errorInput(input);
         switch (input)
         {
         case 1:
@@ -326,8 +366,11 @@ void Delete(Node **head, int *jumlahRoster, string menu)
             DP(head, jumlahRoster);
             loop = false;
             break;
+
         case 0:
             loop = false;
+            break;
+
         default:
             cout << "Masukan antara 1-3 (0 untuk kembali)!";
             break;
@@ -366,7 +409,7 @@ void DL(Node **head, int *jumlahRoster)
 void DP(Node **head, int *jumlahRoster)
 {
     int input;
-    Read(*head);
+    Read(*head, -2);
     cout << "Hapus urutan ke "
          << "(1-" << *jumlahRoster << ") : ";
     cin >> input;
@@ -397,7 +440,7 @@ void DP(Node **head, int *jumlahRoster)
     }
 }
 
-Node *getTail(struct Node *cur)
+Node *getTail(Node *cur)
 {
     while (cur != NULL && cur->next != NULL)
     {
@@ -431,7 +474,7 @@ Node *partition(Node *head, Node *end, Node **newHead, Node **newEnd, int katego
                 {
                     prev->next = cur->next;
                 }
-                struct Node *tmp = cur->next;
+                Node *tmp = cur->next;
                 cur->next = NULL;
                 tail->next = cur;
                 tail = cur;
@@ -580,6 +623,155 @@ void quickSort(Node **headRef, int kategori)
     (*headRef) = quickSortRecur(*headRef, getTail(*headRef), kategori);
     (*headRef) = quickSortRecur(*headRef, getTail(*headRef), kategori);
     return;
+}
+
+void Search(Node **head, int *jumlahRoster, string menu)
+{
+    int input, index;
+    bool loop = true;
+    while (loop == true)
+    {
+        cout << menu;
+        cin >> input;
+        errorInput(input);
+        switch (input)
+        {
+        case 1:
+            cout << "Umur yan di cari : ";
+            cin >> input;
+            errorInput(input);
+            quickSort(head, 21);
+            index = fibonacciSearch(*head, input, *jumlahRoster);
+            Read(*head, index);
+            loop = false;
+            break;
+
+        case 2:
+            cout << "SID yan di cari : ";
+            cin >> input;
+            errorInput(input);
+            quickSort(head, 11);
+            index = jumpSearch(*head, input, *jumlahRoster);
+            Read(*head, index);
+            loop = false;
+            break;
+
+        case 0:
+            loop = false;
+            break;
+
+        default:
+            cout << "Masukan antara 1-2 (0 untuk kembali)!";
+            break;
+        }
+    }
+}
+
+int min(int x, int y)
+{
+    return (x <= y) ? x : y;
+}
+
+int fibonacciSearch(struct Node *node, int x, int n)
+{
+    int F0 = 0;
+    int F1 = 1;
+    int F = F0 + F1;
+    while (F < n)
+    {
+        F0 = F1;
+        F1 = F;
+        F = F0 + F1;
+    }
+    int offset = -1;
+    while (F > 1)
+    {
+
+        Node *head = node;
+        int i = min(offset + F0, n - 1);
+        for (int trv = 0; head->next != NULL && trv < i; trv++)
+        {
+            head = head->next;
+        }
+        if (head->data.bio.umur < x)
+        {
+            F = F1;
+            F1 = F0;
+            F0 = F - F1;
+            offset = i;
+        }
+        else if (head->data.bio.umur > x)
+        {
+            F = F0;
+            F1 = F1 - F0;
+            F0 = F - F1;
+        }
+        else
+        {
+            return i;
+        }
+    }
+
+    Node *head2 = node;
+    for (int trv = 0; head2->next != NULL && trv < offset + 1; trv++)
+    {
+        head2 = head2->next;
+    }
+    if (F1 && head2->data.bio.umur == x)
+        return offset + 1;
+    return -1;
+}
+
+// Jump Search algorithm
+int jumpSearch(struct Node *node, int x, int n)
+{
+    int step = sqrt(n);
+    int prev;
+    Node *head = node;
+
+    if (head->data.sid == x)
+        return 0;
+
+    for (int trv = 0; head->next != NULL && trv < min(step, n) - 1; trv++)
+    {
+        head = head->next;
+    }
+
+    while (head->data.sid < x)
+    {
+        prev = step;
+        step += sqrt(n);
+        if (prev >= n)
+            return -1;
+
+        for (int trv = 0; head->next != NULL && trv < min(step, n) - 1; trv++)
+        {
+            head = head->next;
+        }
+    }
+
+    Node *head2 = node;
+
+    for (int trv = 0; head2->next != NULL && trv < prev; trv++)
+    {
+        head2 = head2->next;
+    }
+
+    while (head2->data.sid < x)
+    {
+        prev++;
+        if (prev == min(step, n))
+            return -1;
+
+        for (int trv = 0; head2->next != NULL && trv < prev; trv++)
+        {
+            head2 = head2->next;
+        }
+    }
+
+    if (head2->data.sid == x)
+        return prev;
+    return -1;
 }
 
 Node inputData()
