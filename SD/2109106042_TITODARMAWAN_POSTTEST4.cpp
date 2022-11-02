@@ -31,7 +31,7 @@ struct Node
 };
 
 void Create(Node **head, int *jumlahRoster, string menu);
-void Read(Node *head);
+void Read(Node *head, int index);
 void Update(Node **head);
 void Delete(Node **head, int *jumlahRoster, string menu);
 void CF(Node **head, int *jumlahRoster);
