@@ -46,7 +46,7 @@ int main()
 {
     int jumlahRoster = 0, input;
     bool loop = true;
-    Node *head = NULL;
+    Node *head = nullptr;
 
     string menuUtama = "\n == Data Roster Karakter ==\n 1. Tambah Data\n 2. Lihat Data\n 3. Ubah Data\n 4. Hapus data\n 5. Keluar\n Masukan pilihan : ";
     string menuTambah = "\n == Tambah Data Roster Karakter ==\n 1. Tambah di awal\n 2. Tambah di akhir\n 3. Tambah urutan tertentu\n Masukan pilihan : ";
@@ -131,9 +131,9 @@ void CL(Node *&head, int &jumlahRoster)
 {
     Node *nodeBaru = new Node;
     nodeBaru->data = inputData().data;
-    nodeBaru->next = NULL;
+    nodeBaru->next = nullptr;
 
-    if (head == NULL)
+    if (head == nullptr)
     {
         head = nodeBaru;
         jumlahRoster = jumlahRoster + 1;
@@ -141,7 +141,7 @@ void CL(Node *&head, int &jumlahRoster)
     }
 
     Node *temp = head;
-    while (temp->next != NULL)
+    while (temp->next != nullptr)
     {
         temp = temp->next;
     }
@@ -152,7 +152,7 @@ void CL(Node *&head, int &jumlahRoster)
 void CP(Node *&head, int &jumlahRoster)
 {
     int input;
-    if (head == NULL)
+    if (head == nullptr)
     {
         cout << "Urutan ke "
              << "(hanya 1) : ";
@@ -194,7 +194,7 @@ void CP(Node *&head, int &jumlahRoster)
 
 void Read(Node *head)
 {
-    if (head == NULL)
+    if (head == nullptr)
     {
         cout << ">> LinkedList masih kosong <<" << endl;
         return;
@@ -202,7 +202,7 @@ void Read(Node *head)
 
     int no = 1;
     cout << " \n=Roster Karakter=\n";
-    while (head != NULL)
+    while (head != nullptr)
     {
         cout << no
              << ". SID       : " << head->data.sid << endl
@@ -220,7 +220,7 @@ void Read(Node *head)
 
 void Update(Node *&head)
 {
-    if (head == NULL)
+    if (head == nullptr)
     {
         cout << "\n >> LinkedList masih kosong << \n"
              << endl;
@@ -230,7 +230,7 @@ void Update(Node *&head)
     cout << "Masukan nama karakter yang akan diubah : ";
     cin >> ubah;
     Node *temp = (head);
-    while (temp != NULL)
+    while (temp != nullptr)
     {
         if (temp->data.bio.nama == ubah)
         {
@@ -246,7 +246,7 @@ void Update(Node *&head)
 
 void Delete(Node *&head, int &jumlahRoster, string menu)
 {
-    if (head == NULL)
+    if (head == nullptr)
     {
         cout << "\n >> LinkedList masih kosong << \n"
              << endl;
@@ -294,20 +294,20 @@ void DF(Node *&head, int &jumlahRoster)
 void DL(Node *&head, int &jumlahRoster)
 {
 
-    if (head->next == NULL)
+    if (head->next == nullptr)
     {
-        head = NULL;
+        head = nullptr;
         jumlahRoster = jumlahRoster - 1;
         cout << "\n Telah dihapus! \n";
         return;
     }
 
     Node *temp = head;
-    while (temp->next->next != NULL)
+    while (temp->next->next != nullptr)
     {
         temp = temp->next;
     }
-    temp->next = NULL;
+    temp->next = nullptr;
     jumlahRoster = jumlahRoster - 1;
     cout << "\n Telah dihapus! \n";
 }
