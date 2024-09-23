@@ -1,5 +1,5 @@
 #include <iostream>
-#include<limits>
+#include <limits>
 
 using namespace std;
 
@@ -82,7 +82,8 @@ void Create(Data *array, int *jumlahRoster)
 
     cout << " \nTambah Data Karakter\n "
          << " SID     : ";
-    cin >> array->sid;errorInput(array->sid);
+    cin >> array->sid;
+    errorInput(array->sid);
 
     cout << "  Nama    : ";
     fflush(stdin);
@@ -91,11 +92,13 @@ void Create(Data *array, int *jumlahRoster)
     cout << "  Gender\n   1. Laki-laki\n   2. Perempuan\n   3. Tidak Terdefinisi\n  Pilih (1/2/3) :  ";
     do
     {
-    if(input <=0 or input >= 4){
-        cout << " \nMasukan angka 1-3! \n Input : ";
-    }
-    cin >> input;errorInput(input);
-    } while (input <=0 or input >= 4);
+        if (input <= 0 or input >= 4)
+        {
+            cout << " \nMasukan angka 1-3! \n Input : ";
+        }
+        cin >> input;
+        errorInput(input);
+    } while (input <= 0 or input >= 4);
 
     switch (input)
     {
@@ -118,24 +121,30 @@ void Create(Data *array, int *jumlahRoster)
     input = 1;
 
     cout << "  Umur  :  ";
-    cin >> array->bio.umur;errorInput(array->bio.umur);
+    cin >> array->bio.umur;
+    errorInput(array->bio.umur);
 
     cout << "  Tanggal lahir\n"
          << "   Hari (angka) : ";
-    cin >> array->lahir.hari;errorInput(array->lahir.hari);
+    cin >> array->lahir.hari;
+    errorInput(array->lahir.hari);
     cout << "   Bulan : ";
-    cin >> array->lahir.bulan;errorInput(array->lahir.bulan);
+    cin >> array->lahir.bulan;
+    errorInput(array->lahir.bulan);
     cout << "   Tahun : ";
-    cin >> array->lahir.tahun;errorInput(array->lahir.tahun);
+    cin >> array->lahir.tahun;
+    errorInput(array->lahir.tahun);
 
     cout << "  Class\n   1. Saber\n   2. Lancer\n   3. Archer\n   4. Caster\n   5. Rider\n   6. Assassin\n   7. Extra\n    Pilih :  ";
     do
     {
-    if(input <=0 or input >= 8){
-        cout << " \nMasukan angka 1-7! \n Input : ";
-    }
-    cin >> input;errorInput(input);
-    } while (input <=0 or input >= 8);
+        if (input <= 0 or input >= 8)
+        {
+            cout << " \nMasukan angka 1-7! \n Input : ";
+        }
+        cin >> input;
+        errorInput(input);
+    } while (input <= 0 or input >= 8);
 
     switch (input)
     {
@@ -176,11 +185,13 @@ void Create(Data *array, int *jumlahRoster)
     cout << "  Posisi\n   1. Front\n   2. Back\n    Pilih :  ";
     do
     {
-    if(input <=0 or input >= 3){
-        cout << " \nMasukan angka 1-2! \n Input : ";
-    }
-    cin >> input;errorInput(input);
-    } while (input <=0 or input >= 3);
+        if (input <= 0 or input >= 3)
+        {
+            cout << " \nMasukan angka 1-2! \n Input : ";
+        }
+        cin >> input;
+        errorInput(input);
+    } while (input <= 0 or input >= 3);
 
     switch (input)
     {
@@ -239,11 +250,13 @@ void Update(Data *array, int *jumlahRoster)
     cout << "\n Pilih yang ingin di ubah (no urut) : ";
     do
     {
-    if(input <=0 or input >= *jumlahRoster+1){
-        cout << " \nMasukan angka urut! \n Input : ";
-    }
-    cin >> input;errorInput(input);
-    } while (input <=0 or input >= *jumlahRoster+1);
+        if (input <= 0 or input >= *jumlahRoster + 1)
+        {
+            cout << " \nMasukan angka urut! \n Input : ";
+        }
+        cin >> input;
+        errorInput(input);
+    } while (input <= 0 or input >= *jumlahRoster + 1);
 
     input -= 1;
     int *inpp = &input;
@@ -263,11 +276,13 @@ void Delete(Data *array, int *jumlahRoster)
     cout << "\n Pilih yang ingin di hapus (no urut) : ";
     do
     {
-    if(input <=0 or input >= *jumlahRoster+1){
-        cout << " \nMasukan angka urut! \n Input : ";
-    }
-    cin >> input;errorInput(input);
-    } while (input <=0 or input >= *jumlahRoster+1);
+        if (input <= 0 or input >= *jumlahRoster + 1)
+        {
+            cout << " \nMasukan angka urut! \n Input : ";
+        }
+        cin >> input;
+        errorInput(input);
+    } while (input <= 0 or input >= *jumlahRoster + 1);
 
     for (int x = 0; x < limit; x++)
     {
@@ -284,14 +299,19 @@ void Delete(Data *array, int *jumlahRoster)
     }
 }
 
-void errorInput(int &input){
-    while(true){
-        if(cin.fail()){
+void errorInput(int &input)
+{
+    while (true)
+    {
+        if (cin.fail())
+        {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout<<"Mohon masukan angka untuk input di atas!\n input :  ";cin>>input;
+            cout << "Mohon masukan angka untuk input di atas!\n input :  ";
+            cin >> input;
         }
-        else{
+        else
+        {
             break;
         }
     }
